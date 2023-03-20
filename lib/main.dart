@@ -22,7 +22,7 @@ class NoteApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark,
           fontFamily: "Poppins",
-          appBarTheme: AppBarTheme(
+          appBarTheme:const AppBarTheme(
             backgroundColor: Colors.black,
             elevation: 0
           ),

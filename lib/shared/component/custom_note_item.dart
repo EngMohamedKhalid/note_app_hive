@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:note_app_hive/modules/edit_note/edit_screen.dart';
 
-Widget customNoteItem(){
+Widget customNoteItem({required BuildContext context}){
   return Container(
     width: double.infinity,
     padding: EdgeInsets.only(top: 30.sp,bottom: 30.sp,left: 20.sp,),
@@ -16,6 +17,11 @@ Widget customNoteItem(){
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder:(context) => EditNoteScreen(),)
+            );
+          },
           title:Text(
             "Flutter Tips",
             style: TextStyle(

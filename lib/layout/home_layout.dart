@@ -8,7 +8,7 @@ class HomeNotesLayOut extends StatelessWidget {
    HomeNotesLayOut({Key? key}) : super(key: key);
   final TextEditingController titleController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +58,6 @@ class HomeNotesLayOut extends StatelessWidget {
                                 text: "Add Note"
                             ),
                             SizedBox(height: 30.h,),
-
                           ],
                         ),
                       ),
@@ -78,7 +77,7 @@ class HomeNotesLayOut extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         itemCount: 15,
         itemBuilder: (context, index) {
-          return customNoteItem();
+          return customNoteItem(context: context);
         },
       )
     );
