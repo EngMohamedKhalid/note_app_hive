@@ -5,6 +5,7 @@ Widget customNoteItem(){
   return Container(
     width: double.infinity,
     padding: EdgeInsets.only(top: 30.sp,bottom: 30.sp,left: 20.sp,),
+    margin: EdgeInsets.only(bottom: 16.sp),
     decoration: BoxDecoration(
         color:const Color(0xffFFCC80),
         borderRadius: BorderRadius.circular(16.r)
