@@ -74,7 +74,7 @@ class HomeNotesLayOut extends StatelessWidget {
       ),
       body:ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 16.sp ,vertical: 16.sp),
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: 15,
         itemBuilder: (context, index) {
           return customNoteItem(context: context);
