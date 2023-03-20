@@ -27,10 +27,17 @@ Widget customStatelessTextField({
         fontSize: 20.sp),
     decoration: InputDecoration(
       prefixIcon: prefix,
+      errorStyle:const TextStyle(
+        color: Colors.amber,
+        fontSize: 18
+      ),
       floatingLabelStyle: const TextStyle(color: Colors.white),
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.sp),
           borderSide: const BorderSide(color: Colors.white)),
+      errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.sp),
+          borderSide: const BorderSide(color: Colors.deepOrange)),
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.sp),
           borderSide: const BorderSide(color: Color(0xff62FCD7))),

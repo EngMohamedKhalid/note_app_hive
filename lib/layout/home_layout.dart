@@ -9,6 +9,7 @@ class HomeNotesLayOut extends StatelessWidget {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +47,7 @@ class HomeNotesLayOut extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Form(
                         key: formKey,
+                        autovalidateMode: autovalidateMode,
                         child: Column(
                           children: [
                             SizedBox(height: 50.h,),
@@ -54,7 +56,13 @@ class HomeNotesLayOut extends StatelessWidget {
                             customStatelessTextField(hintText: "Note",maxLines: 5,controller: noteController),
                             SizedBox(height: 30.h,),
                             CustomButton(
-                                onPressed: (){},
+                                onPressed: (){
+                                  if(formKey.currentState!.validate()){
+                                    autovalidateMode = AutovalidateMode.always;
+                                  }else{
+
+                                  }
+                                },
                                 text: "Add Note"
                             ),
                             SizedBox(height: 30.h,),
