@@ -18,4 +18,13 @@ class AppCubit extends Cubit<AppStates>{
       emit(AddNoteFailure(error.toString()));
     });
   }
+  getNotes()async{
+    try {
+      Box noteBox = Hive.box<NoteModel>("notes_box");
+      emit(GetNoteSuccess(noteBox.values.toList()));
+    } catch (e) {
+      emit(GetNoteFailure(e.toString()));
+    }
+  }
+
 }

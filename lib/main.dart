@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:note_app_hive/layout/home_layout.dart';
 import 'package:note_app_hive/models/note_model.dart';
+import 'package:note_app_hive/shared/cubit/bloc_observer.dart';
+import 'package:note_app_hive/shared/cubit/cubit.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
   await Hive.initFlutter();
-  await Hive.openBox("notes_box");
   Hive.registerAdapter(NoteModelAdapter());
-  runApp(const NoteApp());
+  await Hive.openBox<NoteModel>("notes_box");
+  runApp(
+      MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => AppCubit()..getNotes())
+          ],
+          child: const NoteApp()
+      )
+  );
 }
 class NoteApp extends StatelessWidget {
   const NoteApp({super.key});
