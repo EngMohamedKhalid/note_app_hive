@@ -6,19 +6,13 @@ class AppLoadingState extends AppStates{}
 class AddNote extends AppStates{}
 class DeleteNote extends AppStates{}
 class AddNoteSuccess extends AppStates{}
+class ChangeColorSuccess extends AppStates{}
 class GetNoteSuccess extends AppStates{
-  final List< dynamic> noteModel ;
-  GetNoteSuccess(this.noteModel);
+
 }
 class AddNoteFailure extends AppStates{
   final String errorMessage ;
 
   AddNoteFailure(this.errorMessage);
-
-}
-class GetNoteFailure extends AppStates{
-  final String errorMessage ;
-
-  GetNoteFailure(this.errorMessage);
 
 }

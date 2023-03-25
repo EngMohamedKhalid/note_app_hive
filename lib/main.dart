@@ -44,7 +44,7 @@ class NoteApp extends StatelessWidget {
           ),
           scaffoldBackgroundColor: Colors.black,
         ),
-        home: HomeNotesLayOut(),
+        home: const HomeNotesLayOut(),
       ),
     );
   }

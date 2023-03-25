@@ -8,10 +8,12 @@ Widget customStatelessTextField({
   final TextInputType? keyType,
   final Widget? prefix,
   final VoidCallback? onTap,
+  final Function(String)? onChanged,
   final int? maxLines
 })=>Container(
   padding: padding,
   child: TextFormField(
+    onChanged:onChanged,
     validator: (value) {
       if(value!.isEmpty){
         return "$hintText must not be empty";

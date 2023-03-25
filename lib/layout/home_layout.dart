@@ -1,25 +1,37 @@
+import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:note_app_hive/models/note_model.dart';
 import 'package:note_app_hive/shared/component/custom_button.dart';
+import 'package:note_app_hive/shared/component/custom_color_item.dart';
 import 'package:note_app_hive/shared/component/custom_note_item.dart';
 import 'package:note_app_hive/shared/component/custom_text_field.dart';
+import 'package:note_app_hive/shared/component/notes_colors.dart';
 import 'package:note_app_hive/shared/cubit/cubit.dart';
 import 'package:note_app_hive/shared/cubit/states.dart';
 
-class HomeNotesLayOut extends StatelessWidget {
-   HomeNotesLayOut({Key? key}) : super(key: key);
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController noteController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+class HomeNotesLayOut extends StatefulWidget {
+  const HomeNotesLayOut({Key? key}) : super(key: key);
+
   @override
+  State<HomeNotesLayOut> createState() => _HomeNotesLayOutState();
+}
+
+class _HomeNotesLayOutState extends State<HomeNotesLayOut> {
+  final TextEditingController titleController = TextEditingController();
+
+  final TextEditingController noteController = TextEditingController();
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
   listener: (context, state) {
     if(state is AddNoteSuccess){
-      Navigator.maybePop(context);
+      Navigator.pop(context);
       noteController.clear();
       titleController.clear();
     }
@@ -74,16 +86,32 @@ class HomeNotesLayOut extends StatelessWidget {
                             SizedBox(height: 30.h,),
                             customStatelessTextField(hintText: "Note",maxLines: 5,controller: noteController),
                             SizedBox(height: 30.h,),
+                            SizedBox(
+                              height: 90.h,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: colors.length,
+                                  itemBuilder: (context, index) {
+                                    return CustomColorItem(index: index);
+                                  },
+                              ),
+                            ),
+                            SizedBox(height: 30.h,),
                             CustomButton(
                                 onPressed: (){
                                   if(formKey.currentState!.validate()){
                                     NoteModel noteModel = NoteModel(
                                         title: titleController.text,
                                         content: noteController.text,
-                                        date: DateTime.now().toString(),
-                                        color: Colors.amber.value,
+                                        date:DateFormatter.formatDateTime(
+                                            dateTime: DateTime.now(),
+                                            outputFormat: "dd/MM/yyyy",
+                                        ),
+                                        color: cubit.color.value,
                                     );
                                    cubit.addNote(noteModel);
+                                   cubit.getNotes();
                                   }else{
 
                                   }
@@ -108,9 +136,13 @@ class HomeNotesLayOut extends StatelessWidget {
       body:ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 16.sp ,vertical: 16.sp),
         physics: const BouncingScrollPhysics(),
-        itemCount: 15,
+        itemCount: cubit.notes.length,
         itemBuilder: (context, index) {
-          return customNoteItem(context: context);
+          return customNoteItem(
+            context: context,
+            index: index,
+            noteModel: cubit.notes[index],
+          );
         },
       )
     );
